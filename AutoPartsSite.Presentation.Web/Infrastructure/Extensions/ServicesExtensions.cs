@@ -1,4 +1,7 @@
-﻿using AutoPartsSite.Repository.Base;
+﻿using AutoPartsSite.Application.Profiles;
+using AutoPartsSite.Repository.Base;
+using AutoPartsSite.Repository.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoPartsSite.Presentation.Web.Infrastructure.Extensions
 {
@@ -9,15 +12,12 @@ namespace AutoPartsSite.Presentation.Web.Infrastructure.Extensions
            
             // Add services to the container.
             services.AddControllersWithViews();
-          
-          
 
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-            //services.AddScoped<DbContext, ApplicationDbContext>();
-          
- 
-           
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<DbContext, ApplicationDbContext>();
+
+            services.AddAutoMapper(typeof(BlogProfile).Assembly);
             services.InstallRepositories();
        
             //services.AddSingleton<ILoggerManager, LoggerManager>();

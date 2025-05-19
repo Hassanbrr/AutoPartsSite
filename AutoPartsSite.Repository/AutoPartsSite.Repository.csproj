@@ -7,12 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Context\" />
-    <Folder Include="Modules\" />
+    <Folder Include="Modules\BlogPost\Interfaces\" />
+    <Folder Include="Modules\BlogPost\Implements\" />
+    <Folder Include="Modules\CollaborationRequest\Implements\" />
+    <Folder Include="Modules\CollaborationRequest\Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutoPartsSite.Domain\AutoPartsSite.Domain.csproj" />
   </ItemGroup>
 
 </Project>
