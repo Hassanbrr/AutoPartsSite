@@ -1,7 +1,10 @@
+using AutoPartsSite.Presentation.Web.Infrastructure.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddCustomServicesToContainer(builder.Configuration);
 
 var app = builder.Build();
 
@@ -17,7 +20,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
-
+app.UseAuthentication();
 app.MapStaticAssets();
 
 app.MapControllerRoute(
