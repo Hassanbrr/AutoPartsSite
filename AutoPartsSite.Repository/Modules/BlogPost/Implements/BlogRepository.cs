@@ -7,7 +7,9 @@ namespace AutoPartsSite.Repository.Modules.BlogPost.Implements;
 
 public class BlogRepository : Repository<Domain.BlogPost>, IBlogRepository
 {
-    public BlogRepository(ApplicationDbContext context) : base(context) { }
+    public BlogRepository(ApplicationDbContext context) : base(context)
+    {
+    }
 
     public async Task<IEnumerable<Domain.BlogPost>> GetTopPostsAsync(int count)
     {

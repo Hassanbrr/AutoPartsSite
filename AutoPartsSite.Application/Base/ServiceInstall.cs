@@ -17,9 +17,7 @@ namespace AutoPartsSite.Application.Base
         {
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<ICollaborationRequestService, CollaborationRequestService>();
-            services.AddScoped<IContactService, ContactService>();
-
-
+            services.AddScoped<IContactService, ContactService>(); 
         }
     }
 }

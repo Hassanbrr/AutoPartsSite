@@ -22,11 +22,15 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapStaticAssets();
-
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+        name: "areas",
+        pattern: "{area=Client}/{controller=Dashboard}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}")
+//    .WithStaticAssets();
  
 
 app.Run();

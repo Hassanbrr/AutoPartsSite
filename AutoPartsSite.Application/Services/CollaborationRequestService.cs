@@ -14,17 +14,20 @@ namespace AutoPartsSite.Application.Services
     public class CollaborationRequestService : ICollaborationRequestService
     {
 
-        private readonly IRepository<CollaborationRequest> _collaborationRepository;
+        private readonly IUnitOffWork _unitOffWork;
         private readonly IMapper _mapper;
-        public CollaborationRequestService(IRepository<CollaborationRequest> collaborationRepository, IMapper mapper)
+
+        public CollaborationRequestService(IUnitOffWork unitOffWork, IMapper mapper)
         {
-            _collaborationRepository = collaborationRepository;
+            _unitOffWork = unitOffWork;
             _mapper = mapper;
         }
         public async Task AddPostAsync(CollaborationRequestDto collaborationRequestDto)
         {
             var collaboration = _mapper.Map<CollaborationRequest>(collaborationRequestDto);
-            await _collaborationRepository.AddAsync(collaboration);
+            await _unitOffWork.CollaborationRequest.AddAsync(collaboration);
+            await _unitOffWork.SaveChangesAsync();
+
         }
     }
 }

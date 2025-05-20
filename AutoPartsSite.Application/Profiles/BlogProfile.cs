@@ -13,11 +13,8 @@ namespace AutoPartsSite.Application.Profiles
     {
         public BlogProfile()
         {
-            // نگاشت از موجودیت Domain BlogPost به BlogPostDto
-            CreateMap<BlogPost, BlogPostDto>();
-             
-
-            // نگاشت معکوس را نیز در صورت نیاز اضافه کنید
+         
+            CreateMap<BlogPost, BlogPostDto>(); 
             CreateMap<BlogPostDto, BlogPost>()
                 .ConstructUsing(dto => new BlogPost(
                     dto.Title, dto.Summary, dto.Content, dto.FeaturedImage,

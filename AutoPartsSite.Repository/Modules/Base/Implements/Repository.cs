@@ -44,8 +44,5 @@ public class Repository<T> : IRepository<T> where T : class
     {
         _dbSet.Update(entity);
     }
-    public async Task SaveChangesAsync()
-    {
-        await _context.SaveChangesAsync();
-    }
+  
 }
