@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\BlogPost\Interfaces\" />
     <Folder Include="Modules\BlogPost\Implements\" />
     <Folder Include="Modules\CollaborationRequest\Implements\" />
     <Folder Include="Modules\CollaborationRequest\Interfaces\" />

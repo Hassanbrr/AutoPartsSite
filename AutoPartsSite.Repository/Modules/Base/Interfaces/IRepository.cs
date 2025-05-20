@@ -10,5 +10,5 @@ public interface IRepository<T> where T : class
     Task AddAsync(T entity);
     void Update(T entity);
     void Remove(T entity);
-    // در صورت نیاز، متد ذخیری مثل SaveChangesAsync را نیز می‌توان اضافه کرد.
+    Task SaveChangesAsync();
 }

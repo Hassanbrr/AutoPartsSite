@@ -1,4 +1,5 @@
-﻿using AutoPartsSite.Application.Profiles;
+﻿using AutoPartsSite.Application.Base;
+using AutoPartsSite.Application.Profiles;
 using AutoPartsSite.Repository.Base;
 using AutoPartsSite.Repository.Context;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ namespace AutoPartsSite.Presentation.Web.Infrastructure.Extensions
     {
         public static void AddCustomServicesToContainer(this IServiceCollection services, IConfiguration configuration)
         {
-           
+
             // Add services to the container.
             services.AddControllersWithViews();
 
@@ -19,7 +20,7 @@ namespace AutoPartsSite.Presentation.Web.Infrastructure.Extensions
 
             services.AddAutoMapper(typeof(BlogProfile).Assembly);
             services.InstallRepositories();
-       
+            services.InstallServices();
             //services.AddSingleton<ILoggerManager, LoggerManager>();
             //services.AddScoped<ITokenProvider, TokenProvider>();
             ////services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();

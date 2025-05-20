@@ -17,6 +17,6 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        // تنظیم‌های اضافی مدل‌ها در صورت نیاز
+       
     }
 }

@@ -1,6 +1,16 @@
-﻿namespace AutoPartsSite.Application.Profiles;
+﻿using AutoMapper;
+using AutoPartsSite.Application.DTOs;
+using AutoPartsSite.Domain;
 
-public class ContactMessageProfile
+namespace AutoPartsSite.Application.Profiles;
+
+public class ContactMessageProfile : Profile
 {
-    
+    public ContactMessageProfile()
+    {
+        CreateMap<ContactMessage, ContactMessageDto>();
+        CreateMap<ContactMessageDto, ContactMessage>()
+            .ConstructUsing(dto => new ContactMessage(
+                dto.Name, dto.Email, dto.Subject, dto.Message));
+    }
 }
