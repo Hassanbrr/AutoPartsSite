@@ -1,18 +1,13 @@
-﻿@model List<BlogPostDto>
+﻿@model IEnumerable<BlogPostDto>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-2">
 
 	<div class="row">
 		<div class="page-header breadcrumb-header p-3 mr-2 ml-2 m-2">
 			<div class="row align-items-end ">
-				<div class="col-lg-8">
-					<div class="page-header-title text-left-rtl">
-						<div class="d-inline">
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4">
+
+				<div class="col-lg-12">
 					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item "><a href="#"><i class="fas fa-home"></i></a></li>
+						<li class="breadcrumb-item "><a as><i class="fas fa-home"></i></a></li>
 						<li class="breadcrumb-item active"> وبلاگ ها  </li>
 
 					</ol>
@@ -20,29 +15,34 @@
 			</div>
 		</div>
 	</div>
-	<div class="card shade h-100  ">
+	<div class="card shade h-100 ">
 		<div class="card-body table-responsive">
 
 			<div class="d-flex justify-content-around">
 				<h5 class="card-title">لیست وبلاگ ها   </h5>
-				<a asp-area="Admin" asp-controller="BlogAdmin" asp-action="Index" class="btn o-primary  text-center">اضافه کردن</a>
+				<button class="btn o-primary  text-center" onclick="OpenUpsertModal()">اضافه کردن</button>
 			</div>
 			<hr>
-			<table id="CTable" class="table table-striped   m-1" style="width:100%">
+			<table id="BTable" class="table table-striped   m-1" style="width:100%">
 				<thead>
 					<tr>
+						<th> شناسه </th>
 						<th>نام</th>
 						<th> خلاصه</th>
-						<th>محتوا‌ </th> 
+						<th>محتوا‌ </th>
 						<th>عکس</th>
 						<th>تاریخ ساخت</th>
+						<th>   تنظیمات</th>
+
 					</tr>
 				</thead>
 				<tbody>
-				@if (Model != null && Model.Any())
-				{
-					int counter = 1; // شمارنده دستی
-					foreach (var blog in Model)
+
+
+					@{
+						int counter = 1; // شمارنده دستی
+					}
+					@foreach (var blog in Model)
 					{
 						<tr>
 							<td>@counter</td>
@@ -52,30 +52,69 @@
 							<td><img src="@blog.FeaturedImage" alt="Alternate Text" /></td>
 							<td>@blog.PublishDate</td>
 							<td>
-								<a asp-area="Admin" href="#" class="btn c-warning"><i class="fa fa-edit"></i></a>
-								<a asp-area="Admin" href="#" class="btn c-forth"><i class="fa fa-trash"></i></a>
+								<div class="d-flex align-items-center">
+									<button class="btn c-warning me-2" onclick="OpenUpsertModal(@blog.Id)">
+										<i class="fa fa-edit"></i>
+									</button>
+									<button class="btn c-forth">
+										<i class="fa fa-trash"></i>
+									</button>
+								</div>
 							</td>
+
 						</tr>
 						counter++;
 					}
-				}
-				else
-				{
-					<tr>
-						<td colspan="7" class="text-center text-danger">هیچ داده‌ای برای نمایش وجود ندارد!</td>
-					</tr>
-				}
+
+
 				</tbody>
 			</table>
 		</div>
 
 	</div>
 </div>
+<div class="modal fade" id="UpsertModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="UpsertModalTitle">افزودن وبلاگ</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form id="UpsertBlogForm">
+					<input type="hidden" name="Id" id="BlogId">
+
+					<div class="mb-3">
+						<label class="form-label">عنوان وبلاگ</label>
+						<input type="text" class="form-control" name="Title" id="Title">
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">تصویر وبلاگ</label>
+						<input type="text" class="form-control" name="FeaturedImage" id="FeaturedImage">
+					</div>
+					<div class="mb-3">
+						<label class="form-label">خلاصه وبلاگ</label>
+						<input type="text" class="form-control" name="Summary" id="Summary">
+					</div>
+
+					<div class="mb-3">
+						<label for="Content">محتوا</label>
+						<textarea id="Content" name="Content" rows="10" class="form-control"> </textarea>
+					</div>
+
+
+					<button type="submit" class="btn btn-primary">ذخیره</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 @section Scripts
 {
 	<script>
 		$(document).ready(function () {
-			 $('#CTable').DataTable({
+			 $('#BTable').DataTable({
 				 responsive: true, // برای ریسپانسیو کردن جدول
 				 autoWidth: false, // جلوگیری از عرض خودکار
 				 dom: '<"row"<"col-sm-6"f><"col-sm-6"l>>' +
@@ -110,5 +149,83 @@
 				 }
 			 });
 		});
+	</script>
+
+
+
+	<script>
+		function OpenUpsertModal(blogId = null) {
+		if (blogId) {
+			$.ajax({
+				url: "/Admin/BlogAdmin/GetBlog",
+				type: "GET",
+				data: { id: blogId },
+				success: function (blog) {
+					$("#BlogId").val(blog.id);
+					$("#Title").val(blog.title);
+					$("#Summary").val(blog.summary);
+					$("#FeaturedImage").val(blog.featuredImage);
+
+					// به‌روزرسانی مقدار CKEditor
+					if (CKEDITOR.instances['Content']) {
+						CKEDITOR.instances['Content'].setData(blog.content);
+					} else {
+						$("#Content").val(blog.content);
+					}
+
+					$("#UpsertModalTitle").text("ویرایش وبلاگ");
+					$("#UpsertModal").modal("show");
+				},
+				error: function () {
+					alert("خطایی رخ داده است!");
+				}
+			});
+		} else {
+			$("#BlogId").val("");
+			$("#Title").val("");
+			$("#Summary").val("");
+			$("#FeaturedImage").val("");
+
+			// پاک کردن مقدار در CKEditor
+			if (CKEDITOR.instances['Content']) {
+				CKEDITOR.instances['Content'].setData("");
+			} else {
+				$("#Content").val("");
+			}
+
+			$("#UpsertModalTitle").text("افزودن وبلاگ");
+			$("#UpsertModal").modal("show");
+		}
+			}
+
+				$("#UpsertBlogForm").submit(function (event) {
+			event.preventDefault();
+
+			// استخراج مقدار از CKEditor و مقداردهی به textarea
+			if (CKEDITOR.instances['Content']) {
+				$("#Content").val(CKEDITOR.instances['Content'].getData());
+			}
+
+			$.ajax({
+				url: "/Admin/BlogAdmin/Upsert",
+				type: "POST",
+				data: $(this).serialize(),
+				success: function () {
+					alert("عملیات با موفقیت انجام شد!");
+					location.reload();
+				},
+				error: function () {
+					alert("خطایی رخ داده است!");
+				}
+			});
+		});
+
+
+
+	</script>
+
+	<script src="~/Admin/ckeditor/ckeditor.js"></script>
+	<script>
+		CKEDITOR.replace('Content');
 	</script>
 }
