@@ -212,20 +212,9 @@ function OpenUpsertModal(blogId = null) {
 
 	</script>
 
-	  <script src="~/Admin/ckeditor5/ckeditor5/ckeditor5.js"></script> 
+	  <script src="~/Admin/ckeditor5/main.js"></script> 
 	<script>
-$('#UpsertModal').on('shown.bs.modal', function () {
-    if (!CKEDITOR.instances['Content']) {
-        ClassicEditor
-            .create(document.querySelector('#Content'))
-            .then(editor => {
-                window.editor = editor;
-            })
-            .catch(error => {
-                console.error('خطایی رخ داد:', error);
-            });
-    }
-		});
+		console.log(typeof ClassicEditor);
 
 	</script>
 }
