@@ -154,78 +154,78 @@
 
 
 	<script>
-		function OpenUpsertModal(blogId = null) {
-		if (blogId) {
-			$.ajax({
-				url: "/Admin/BlogAdmin/GetBlog",
-				type: "GET",
-				data: { id: blogId },
-				success: function (blog) {
-					$("#BlogId").val(blog.id);
-					$("#Title").val(blog.title);
-					$("#Summary").val(blog.summary);
-					$("#FeaturedImage").val(blog.featuredImage);
+function OpenUpsertModal(blogId = null) {
+    if (blogId) {
+        $.ajax({
+            url: "/Admin/BlogAdmin/GetBlog",
+            type: "GET",
+            data: { id: blogId },
+            success: function (blog) {
+                $("#BlogId").val(blog.id);
+                $("#Title").val(blog.title);
+                $("#Summary").val(blog.summary);
+                $("#FeaturedImage").val(blog.featuredImage);
+                
+                // مقداردهی CKEditor 5
+                if (window.editor) {
+                    window.editor.setData(blog.content);
+                } else {
+                    ClassicEditor.create(document.querySelector('#Content'))
+                        .then(editor => {
+                            window.editor = editor;
+                            editor.setData(blog.content);
+                        })
+                        .catch(error => console.error('خطا در CKEditor:', error));
+                }
 
-					// به‌روزرسانی مقدار CKEditor
-					if (CKEDITOR.instances['Content']) {
-						CKEDITOR.instances['Content'].setData(blog.content);
-					} else {
-						$("#Content").val(blog.content);
-					}
+                $("#UpsertModalTitle").text("ویرایش وبلاگ");
+                $("#UpsertModal").modal("show");
+            },
+            error: function () {
+                alert("خطایی رخ داده است!");
+            }
+        });
+    } else {
+        $("#BlogId").val("");
+        $("#Title").val("");
+        $("#Summary").val("");
+        $("#FeaturedImage").val("");
 
-					$("#UpsertModalTitle").text("ویرایش وبلاگ");
-					$("#UpsertModal").modal("show");
-				},
-				error: function () {
-					alert("خطایی رخ داده است!");
-				}
-			});
-		} else {
-			$("#BlogId").val("");
-			$("#Title").val("");
-			$("#Summary").val("");
-			$("#FeaturedImage").val("");
+        // مقداردهی CKEditor 5 در حالت افزودن جدید
+        if (window.editor) {
+            window.editor.setData("");
+        } else {
+            ClassicEditor.create(document.querySelector('#Content'))
+                .then(editor => {
+                    window.editor = editor;
+                    editor.setData("");
+                })
+                .catch(error => console.error('خطا در CKEditor:', error));
+        }
 
-			// پاک کردن مقدار در CKEditor
-			if (CKEDITOR.instances['Content']) {
-				CKEDITOR.instances['Content'].setData("");
-			} else {
-				$("#Content").val("");
-			}
-
-			$("#UpsertModalTitle").text("افزودن وبلاگ");
-			$("#UpsertModal").modal("show");
+        $("#UpsertModalTitle").text("افزودن وبلاگ");
+        $("#UpsertModal").modal("show");
+    }
 		}
-			}
-
-				$("#UpsertBlogForm").submit(function (event) {
-			event.preventDefault();
-
-			// استخراج مقدار از CKEditor و مقداردهی به textarea
-			if (CKEDITOR.instances['Content']) {
-				$("#Content").val(CKEDITOR.instances['Content'].getData());
-			}
-
-			$.ajax({
-				url: "/Admin/BlogAdmin/Upsert",
-				type: "POST",
-				data: $(this).serialize(),
-				success: function () {
-					alert("عملیات با موفقیت انجام شد!");
-					location.reload();
-				},
-				error: function () {
-					alert("خطایی رخ داده است!");
-				}
-			});
-		});
 
 
 
 	</script>
 
-	<script src="~/Admin/ckeditor/ckeditor.js"></script>
+	  <script src="~/Admin/ckeditor5/ckeditor5/ckeditor5.js"></script> 
 	<script>
-		CKEDITOR.replace('Content');
+$('#UpsertModal').on('shown.bs.modal', function () {
+    if (!CKEDITOR.instances['Content']) {
+        ClassicEditor
+            .create(document.querySelector('#Content'))
+            .then(editor => {
+                window.editor = editor;
+            })
+            .catch(error => {
+                console.error('خطایی رخ داد:', error);
+            });
+    }
+		});
+
 	</script>
 }
