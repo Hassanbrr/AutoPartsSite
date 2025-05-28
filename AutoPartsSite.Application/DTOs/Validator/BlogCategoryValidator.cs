@@ -15,5 +15,8 @@ public class BlogCategoryValidator : AbstractValidator<BlogCategoryDto>
 
         RuleFor(x => x.ParentCategoryId)
             .Must(id => id == null || id > 0).WithMessage("شناسه دسته والد نامعتبر است.");
+        RuleFor(x => x.ParentCategoryId)
+            .NotEqual(x => x.Id)
+            .WithMessage("یک دسته نمی‌تواند والد خودش باشد.");
     }
 }

@@ -12,7 +12,7 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<BlogPost> BlogPosts { get; set; }
-    public DbSet<BlogCategory> BlogCategories { get; set; }
+    public DbSet<BlogCategory?> BlogCategories { get; set; }
     public DbSet<ContactMessage> ContactMessages { get; set; }
     public DbSet<CollaborationRequest> CollaborationRequests { get; set; }
 
@@ -32,7 +32,7 @@ public class ApplicationDbContext : DbContext
             .HasOne(c => c.ParentCategory)
             .WithMany(c => c.ChildCategories)
             .HasForeignKey(c => c.ParentCategoryId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.SetNull);
 
     }
 }

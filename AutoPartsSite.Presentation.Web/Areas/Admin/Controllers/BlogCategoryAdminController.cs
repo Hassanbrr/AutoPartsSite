@@ -1,6 +1,6 @@
 ﻿using AutoPartsSite.Application.DTOs;
 using AutoPartsSite.Application.InterFaces;
-using AutoPartsSite.Presentation.Web.Infrastructure.Helps;
+ 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -9,65 +9,67 @@ namespace AutoPartsSite.Presentation.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class BlogCategoryAdminController : Controller
     {
-        private readonly IBlogCategoryService _blogCategoryService;
+        private readonly IBlogCategoryService _categoryService;
 
-        public BlogCategoryAdminController(IBlogCategoryService blogCategoryService)
+        public BlogCategoryAdminController(IBlogCategoryService categoryService)
         {
-            _blogCategoryService = blogCategoryService;
+            _categoryService = categoryService;
         }
 
-        // نمایش لیست دسته‌بندی‌ها
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var categories = await _blogCategoryService.GetAllCategoryAsync();
+            var categories = await _categoryService.GetAllCategoryAsync();
             return View(categories);
         }
 
-        // GET: بارگذاری مدال برای افزودن/ویرایش دسته
         [HttpGet]
         public async Task<IActionResult> Upsert(int? id)
         {
             BlogCategoryDto dto = id == null
-                ? new BlogCategoryDto()       // افزودن دسته جدید
-                : await _blogCategoryService.GetCategoryByIdAsync((int)id); // ویرایش دسته موجود
+                ? new BlogCategoryDto()
+                : await _categoryService.GetCategoryByIdAsync((int)id);
 
-            // دریافت لیست کلی دسته‌ها برای انتخاب والد
-            var allCategories = await _blogCategoryService.GetAllCategoryAsync();
-            if (id != null)
-            {
-                // جلوگیری از انتخاب خود دسته به عنوان والد
-                allCategories = allCategories.Where(c => c.Id != id).ToList();
-            }
-            ViewBag.ParentCategories = new SelectList(allCategories, "Id", "Name", dto.ParentCategoryId);
+            var allCategories = (await _categoryService.GetAllCategoryAsync()).ToList();
+
+            ViewBag.ParentCategories = BlogCategoryTreeHelper.BuildCategoryTree(allCategories, dto.ParentCategoryId, dto.Id);
 
             return PartialView("_UpsertModal", dto);
         }
-        // POST: ذخیره تغییرات (افزودن یا ویرایش)
+
+
         [HttpPost]
-        public async Task<IActionResult> Upsert(BlogCategoryDto categoryDto)
+        public async Task<IActionResult> Upsert(BlogCategoryDto dto)
         {
             if (!ModelState.IsValid)
             {
-                return PartialView("_UpsertModal", categoryDto); // نمایش مجدد فرم با خطاها
+                var allCategories = (await _categoryService.GetAllCategoryAsync())
+                                    .Where(c => c.Id != dto.Id).ToList();
+                ViewBag.ParentCategories = BlogCategoryTreeHelper.BuildCategoryTree(allCategories, dto.ParentCategoryId, dto.Id);
+
+                return PartialView("_UpsertModal", dto);
             }
 
-            if (categoryDto.Id == 0)
-                await _blogCategoryService.AddCategoryAsync(categoryDto);
+            if (dto.Id == 0)
+                await _categoryService.AddCategoryAsync(dto);
             else
-                await _blogCategoryService.UpdateCategoryAsync(categoryDto);
+                await _categoryService.UpdateCategoryAsync(dto);
 
-            return Json(new { success = true }); // ارسال پاسخ موفقیت‌آمیز
-        }
-
-        // حذف دسته‌بندی
-        [HttpPost]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _blogCategoryService.DeleteCategoryAsync(id);
             return Json(new { success = true });
         }
 
-
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _categoryService.DeleteCategoryAsync(id);
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
     }
-
 }

@@ -52,9 +52,18 @@ public class BlogCategoryService : IBlogCategoryService
 
     public async Task DeleteCategoryAsync(int id)
     {
-        var category = await _unitOffWork.BlogCategory.GetByIdAsync(id);
+        var category = await _unitOffWork.BlogCategory.GetCategoryWithChildrenAndPostsAsync(id);
+
         if (category == null) return;
+
+        var hasChildren = category.ChildCategories.Any();
+        var hasPosts = category.BlogPosts.Any();
+
+        if (hasChildren || hasPosts)
+            throw new InvalidOperationException("امکان حذف دسته‌ای که دارای زیرمجموعه یا پست است وجود ندارد.");
+
         _unitOffWork.BlogCategory.Remove(category);
         await _unitOffWork.SaveChangesAsync();
     }
+
 }

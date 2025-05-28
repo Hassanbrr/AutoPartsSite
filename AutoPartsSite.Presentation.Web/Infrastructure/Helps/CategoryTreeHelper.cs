@@ -1,26 +1,35 @@
 ﻿using AutoPartsSite.Application.DTOs;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace AutoPartsSite.Presentation.Web.Infrastructure.Helps;
-
-public static class CategoryTreeHelper
+public static class BlogCategoryTreeHelper
 {
-    public static List<SelectListItem> BuildCategorySelectList(IEnumerable<BlogCategoryDto> categories, int? parentId = null, string prefix = "")
+    public static List<SelectListItem> BuildCategoryTree(List<BlogCategoryDto> categories, int? selectedId = null, int? excludeId = null)
     {
-        var result = new List<SelectListItem>();
+        var list = new List<SelectListItem>();
+        BuildRecursive(null, "", categories, list, selectedId, excludeId);
+        return list;
+    }
 
-        var children = categories.Where(c => c.ParentCategoryId == parentId).OrderBy(c => c.Name);
-        foreach (var child in children)
+    private static void BuildRecursive(int? parentId, string prefix, List<BlogCategoryDto> categories, List<SelectListItem> result, int? selectedId, int? excludeId)
+    {
+        var children = categories
+            .Where(c => c.ParentCategoryId == parentId)
+            .OrderBy(c => c.Name)
+            .ToList();
+
+        foreach (var category in children)
         {
+            if (excludeId != null && category.Id == excludeId)
+                continue;
+
             result.Add(new SelectListItem
             {
-                Value = child.Id.ToString(),
-                Text = prefix + child.Name
+                Text = $"{prefix}{category.Name}",
+                Value = category.Id.ToString(),
+                Selected = selectedId == category.Id
             });
 
-            result.AddRange(BuildCategorySelectList(categories, child.Id, prefix + "— "));
+            BuildRecursive(category.Id, prefix + "— ", categories, result, selectedId, excludeId);
         }
-
-        return result;
     }
 }
