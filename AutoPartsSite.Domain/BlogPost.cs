@@ -8,19 +8,16 @@ public class BlogPost
     public string Content { get; private set; }
     public string FeaturedImage { get; private set; }
     public DateTime PublishDate { get; private set; }
+    public string Slug { get; private set; }
 
- 
+    public int CategoryId { get;  set; }
+    public BlogCategory Category { get; private set; }
 
     // سازنده اصلی برای ایجاد یک مقاله جدید
-    public BlogPost(string title, string summary, string content, string featuredImage, DateTime publishDate)
-    {
-        Title = title;
-        Summary = summary;
-        Content = content;
-        FeaturedImage = featuredImage;
-        PublishDate = publishDate;
- 
-    } 
 
- 
+
+    public BlogPost()
+    {
+
+    }
 }

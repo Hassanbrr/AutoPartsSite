@@ -1,4 +1,5 @@
-﻿using AutoPartsSite.Repository.Modules.BlogPost.Interfaces;
+﻿using AutoPartsSite.Repository.Modules.BlogCategory.Interfaces;
+using AutoPartsSite.Repository.Modules.BlogPost.Interfaces;
 using AutoPartsSite.Repository.Modules.CollaborationRequest.Interfaces;
 using AutoPartsSite.Repository.Modules.ContactMessage.Interfaces;
 
@@ -9,6 +10,7 @@ public interface IUnitOffWork
     IBlogRepository Blog { get; }
     IContactMessageRepository ContactMessage { get; }
     ICollaborationRequestRepository CollaborationRequest { get; }
+    IBlogCategoryRepository BlogCategory { get; }
 
     Task SaveChangesAsync();
 

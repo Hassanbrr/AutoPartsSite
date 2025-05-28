@@ -11,15 +11,7 @@
         public string Message { get; private set; }
         public DateTime SentDate { get; private set; }
 
-        public ContactMessage(string name, string email, string subject, string message)
-        {
-            Name = name;
-            Email = email;
-            Subject = subject;
-            Message = message;
-            SentDate = DateTime.UtcNow; // ذخیره خودکار زمان ارسال
-        }
-
+     
         protected ContactMessage() { }
     }
  

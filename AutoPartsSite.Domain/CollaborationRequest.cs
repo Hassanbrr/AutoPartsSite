@@ -10,15 +10,6 @@ public class CollaborationRequest
     public string Message { get; private set; }
     public DateTime RequestDate { get; private set; }
 
-    public CollaborationRequest(string companyName, string contactPerson, string email, string phone, string message)
-    {
-        CompanyName = companyName;
-        ContactPerson = contactPerson;
-        Email = email;
-        Phone = phone;
-        Message = message;
-        RequestDate = DateTime.UtcNow;
-    }
-
+  
     protected CollaborationRequest() { }
 }

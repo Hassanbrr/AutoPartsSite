@@ -8,15 +8,12 @@
 	<meta name="description" content="nozha admin panel fully support rtl with complete dark mode css to use. ">
 	<meta name=”robots” content="index, follow">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	@* <link rel="apple-touch-icon" sizes="180x180" href="./img/favicon/apple-touch-icon.png"> *@
-	@* <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon/favicon-32x32.png"> *@
-	@* <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png"> *@
-	@* <link rel="manifest" href="./img/favicon/site.webmanifest"> *@
-	@* <link rel="mask-icon" href="./img/favicon/safari-pinned-tab.svg" color="#5bbad5"> *@
+ 
 	<meta name="msapplication-TileColor" content="#2b5797">
 	<meta name="theme-color" content="#ffffff">
 	<!-- Place favicon.ico in the root directory -->
-	<link rel="stylesheet" href="~/Admin/css/normalize.css">
+	<link href="~/Admin/css/dataTables.dataTables.min.css" rel="stylesheet">
+
 	<link href="~/Admin/css/fontawsome/all.min.css" rel="stylesheet">
 	<link rel="stylesheet"
 		  href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
@@ -26,11 +23,20 @@
 		  integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 
-	<link  rel="stylesheet" href="~/Admin/css/datatables.datatables.min.css" />
+	@* <link  rel="stylesheet" href="~/Admin/css/datatables.datatables.min.css" /> *@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 	<link rel="stylesheet" href="~/Admin/css/main.css">
  
+	
+	
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+
+	<!-- JS -->
+
 
 </head>
 
@@ -164,7 +170,7 @@
 						<a asp-area="Admin" asp-controller="BlogAdmin" asp-action="Index" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>لیست وبلاگ ها</a>
 					</li>
 					<li class="side-item">
-						<a href="./dark.html" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>پنل کاربری تاریک</a>
+						<a asp-area="Admin" asp-controller="BlogCategoryAdmin" asp-action="Index" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>دسته بندی وبلاگ ها </a>
 					</li>
 					<li class="side-item"><a href="./Login.html" class="fnt-mxs"><i class="fas fa-angle-right mr-2"></i>صفحه ورود</a></li>
 					<li class="side-item"><a href="./glogin.html"><i class="fas fa-angle-right mr-2"></i>صفحه ورود رنگی</a></li>
@@ -273,7 +279,6 @@
 	<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
 			integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous">
 	</script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 	<script src="~/Admin/js/persianumber.min.js"></script>
 	<script>
 		$(document).ready(function () {
@@ -293,12 +298,19 @@
 			}
 		}(document, 'script', 'weatherwidget-io-js');
 	</script>
- 
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 	<script src="~/Admin/js/vendor/modernizr.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/Client/js/" asp-append-version="true"></script>
-	<script src="~/Admin/js/main.js"></script>
 	<script src="~/Admin/js/site.js"></script>
+	<script src="~/Admin/js/ckeditor.js"></script>
+
+
 
 	@await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -70,13 +70,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Areas\Admin\wwwroot\favicon.ico">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -110,8 +103,6 @@
     <None Include="wwwroot\Admin\css\webfonts\fa-solid-900.ttf" />
     <None Include="wwwroot\Admin\css\webfonts\fa-solid-900.woff" />
     <None Include="wwwroot\Admin\css\webfonts\fa-solid-900.woff2" />
-    <None Include="wwwroot\Admin\js\main.js" />
-    <None Include="wwwroot\Admin\js\persianumber.min.js" />
     <None Include="wwwroot\Admin\js\site.js" />
     <None Include="wwwroot\Admin\js\vendor\modernizr.js" />
     <None Include="wwwroot\Admin\svg\img.svg" />
@@ -178,6 +169,10 @@
     <None Include="wwwroot\lib\jquery\dist\jquery.slim.min.js" />
     <None Include="wwwroot\lib\jquery\dist\jquery.slim.min.map" />
     <None Include="wwwroot\lib\jquery\LICENSE.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>

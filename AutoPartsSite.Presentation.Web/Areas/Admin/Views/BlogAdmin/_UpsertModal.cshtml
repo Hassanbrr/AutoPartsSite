@@ -1,0 +1,47 @@
+﻿@model BlogPostDto
+
+<div class="modal-header">
+	<h5 class="modal-title">@((Model.Id == 0) ? "افزودن وبلاگ" : "ویرایش وبلاگ")</h5>
+	<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+	<form id="UpsertBlogForm" asp-area="Admin" asp-controller="BlogAdmin" asp-action="Upsert" method="POST">
+		<input asp-for="Id" type="hidden" />
+
+		<div class="mb-3">
+			<label asp-for="Title" class="form-label"></label>
+			<input asp-for="Title" class="form-control" />
+			<span asp-validation-for="Title" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+		 
+			<span asp-validation-for="CategoryId" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="FeaturedImage" class="form-label"></label>
+			<input asp-for="FeaturedImage" class="form-control" />
+			<span asp-validation-for="FeaturedImage" class="text-danger"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="Summary" class="form-label"></label>
+			<input asp-for="Summary" class="form-control" />
+			<span asp-validation-for="Summary" class="text-danger"></span>
+		</div>
+
+		<div class="mb-3">
+			<label asp-for="Content" class="form-label"></label>
+			<textarea asp-for="Content" id="Content" name="Content" class="form-control" rows="10"></textarea>
+			<span asp-validation-for="Content" class="text-danger"></span>
+		</div>
+
+		<button type="submit" class="btn btn-primary">
+			ذخیره
+		</button>
+	</form>
+</div>
+
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

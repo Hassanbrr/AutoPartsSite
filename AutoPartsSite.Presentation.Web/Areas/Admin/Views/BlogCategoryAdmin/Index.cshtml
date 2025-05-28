@@ -1,0 +1,150 @@
+﻿@model IEnumerable<AutoPartsSite.Application.DTOs.BlogCategoryDto>
+ 
+ 
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-2">
+
+	<div class="row">
+		<div class="page-header breadcrumb-header p-3 mr-2 ml-2 m-2">
+			<div class="row align-items-end ">
+
+				<div class="col-lg-12">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item "><a as><i class="fas fa-home"></i></a></li>
+						<li class="breadcrumb-item active"> دسته بندی  وبلاگ ها  </li>
+
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card shade h-100 ">
+		<div class="card-body table-responsive">
+
+			<div class="d-flex justify-content-around">
+				<h5 class="card-title">لیست دسته بندی ها   </h5>
+                <button class="btn o-primary  text-center" data-bs-toggle="modal" data-bs-target="#categoryModal" onclick="openCategoryModal(0)">اضافه کردن</button>
+			</div>
+			<hr>
+			<table id="BTable" class="table table-striped   m-1" style="width:100%">
+				<thead>
+				<tr>
+					<th>شناسه</th>
+					<th>نام</th>
+					<th>اسلاگ</th>
+					<th>توضیحات</th>
+					<th>دسته والد</th>
+					<th>تنظیمات</th>
+
+				</tr>
+				</thead>
+				<tbody>
+				@foreach (var category in Model)
+				{
+					<tr>
+						<td>@category.Id</td>
+						<td>@category.Name</td>
+						<td>@category.Slug</td>
+						<td>@category.Description</td>
+						<td>@(category.ParentCategoryName)</td>
+						<td>
+								<button type="button" class="btn c-warning" data-bs-toggle="modal" data-bs-target="#categoryModal"
+							        onclick="openCategoryModal(@category.Id)">
+									<i class="fa fa-edit"></i>
+							</button>
+								<button type="button" class="btn  c-forth btn-sm" onclick="openDeleteModal(@category.Id)">
+									<i class="fa fa-trash"></i>
+							</button>
+						</td>
+					</tr>
+				}
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</div>
+<!-- ساختار مدال (محتوای مدال از طریق AJAX بارگذاری می‌شود) -->
+<div class="modal fade" id="categoryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="categoryModalContent">
+            <!-- محتوای فرم upsert به‌صورت AJAX اینجا قرار می‌گیرد -->
+        </div>
+    </div>
+</div>
+<!-- مدال تأیید حذف -->
+<div class="modal fade" id="DeleteConfirmModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">حذف دسته‌بندی</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<p>آیا مطمئن هستید که می‌خواهید این دسته‌بندی را حذف کنید؟</p>
+				<input type="hidden" id="deleteCategoryId" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+				<button type="button" class="btn btn-danger" onclick="confirmDeleteCategory()">حذف</button>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts {
+    <script>
+        // باز کردن مدال و بارگذاری فرم upsert از طریق AJAX
+        function openCategoryModal(id) {
+            var url = '@Url.Action("Upsert", "BlogCategoryAdmin", new { area = "Admin" })' + (id ? '?id=' + id : '');
+            $.get(url, function (data) {
+                $('#categoryModalContent').html(data);
+            });
+        }
+           
+		
+		$(document).on("submit", "#CategoryForm", function (e) {
+            e.preventDefault(); // جلوگیری از ارسال استاندارد فرم
+            var form = $(this);
+
+            $.ajax({
+                url: form.attr("action"),
+                type: form.attr("method"),
+                data: form.serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        $("#categoryModal").modal("hide"); // بستن مدال
+                        location.reload(); // رفرش صفحه
+                    } else {
+                        $("#categoryModalContent").html(response); // نمایش مجدد فرم با خطاها
+                    }
+                },
+                error: function () {
+                    alert("خطایی در ثبت دسته‌بندی رخ داده است!");
+                }
+            });
+        });
+				function openDeleteModal(id) {
+			$("#deleteCategoryId").val(id); // تنظیم مقدار شناسه دسته‌بندی
+			$("#DeleteConfirmModal").modal("show"); // نمایش مدال
+		}
+		 function confirmDeleteCategory() {
+			var id = $("#deleteCategoryId").val(); // دریافت شناسه دسته‌بندی
+
+			$.ajax({
+				url: '@Url.Action("Delete", "BlogCategoryAdmin", new { area = "Admin" })',
+				type: 'POST',
+				data: { id: id },
+				success: function (response) {
+					if (response.success) {
+						$("#DeleteConfirmModal").modal("hide"); // بستن مدال
+						location.reload(); // رفرش صفحه
+					} else {
+						alert("حذف با مشکل مواجه شد!");
+					}
+				},
+				error: function () {
+					alert("خطایی در حذف دسته‌بندی رخ داد!");
+				}
+			});
+		}
+    </script>
+}

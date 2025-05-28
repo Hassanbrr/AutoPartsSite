@@ -1,5 +1,7 @@
 ﻿using AutoPartsSite.Repository.Modules.Base.Implements;
 using AutoPartsSite.Repository.Modules.Base.Interfaces;
+using AutoPartsSite.Repository.Modules.BlogCategory.Implements;
+using AutoPartsSite.Repository.Modules.BlogCategory.Interfaces;
 using AutoPartsSite.Repository.Modules.BlogPost.Implements;
 using AutoPartsSite.Repository.Modules.BlogPost.Interfaces;
 using AutoPartsSite.Repository.Modules.CollaborationRequest.Implements;
@@ -18,7 +20,9 @@ namespace AutoPartsSite.Repository.Base
             services.AddScoped<IUnitOffWork, UnitOfWork>();
             services.AddScoped<IBlogRepository, BlogRepository>();
             services.AddScoped<ICollaborationRequestRepository, CollaborationRequestRepository>();   
-            services.AddScoped<IContactMessageRepository, ContactMessageRepository>();   
+            services.AddScoped<IContactMessageRepository, ContactMessageRepository>();
+            services.AddScoped<IBlogCategoryRepository, BlogCategoryRepository>();
+
 
         }
     }

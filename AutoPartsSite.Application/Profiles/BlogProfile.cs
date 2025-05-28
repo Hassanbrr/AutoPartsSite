@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿ 
 using AutoMapper;
 using AutoPartsSite.Application.DTOs;
 using AutoPartsSite.Domain;
@@ -13,12 +9,12 @@ namespace AutoPartsSite.Application.Profiles
     {
         public BlogProfile()
         {
-         
-            CreateMap<BlogPost, BlogPostDto>(); 
-            CreateMap<BlogPostDto, BlogPost>()
-                .ConstructUsing(dto => new BlogPost(
-                    dto.Title, dto.Summary, dto.Content, dto.FeaturedImage,
-                    dto.PublishDate));
+
+            CreateMap<BlogPost, BlogPostDto>()
+                .ForMember(dest => dest.CategoryName,
+                    opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : string.Empty));
+
+
         }
     }
 

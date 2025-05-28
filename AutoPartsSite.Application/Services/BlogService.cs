@@ -19,7 +19,7 @@ public class BlogService : IBlogService
 
     public async Task<IEnumerable<BlogPostDto>> GetAllPostsAsync()
     {
-        var posts = await _unitOffWork.Blog.GetAllAsync();
+        var posts = await _unitOffWork.Blog.GetAllAsync("Category");
         return _mapper.Map<IEnumerable<BlogPostDto>>(posts);
     }
 
@@ -32,6 +32,7 @@ public class BlogService : IBlogService
     public async Task AddPostAsync(BlogPostDto postDto)
     {
         var post = _mapper.Map<BlogPost>(postDto);
+        post.CategoryId = postDto.CategoryId;
         await _unitOffWork.Blog.AddAsync(post);
         await _unitOffWork.SaveChangesAsync();
     }
@@ -41,6 +42,8 @@ public class BlogService : IBlogService
         var post = await _unitOffWork.Blog.GetByIdAsync(postDto.Id);
         if (post == null) return;
         _mapper.Map(postDto, post);
+        post.CategoryId = postDto.CategoryId;
+
         _unitOffWork.Blog.Update(post);
         await _unitOffWork.SaveChangesAsync();
 

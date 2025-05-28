@@ -10,8 +10,6 @@ public class CollaborationRequestProfile : Profile
     {
         CreateMap<CollaborationRequest, CollaborationRequestDto>();
 
-        CreateMap<CollaborationRequestDto, CollaborationRequest>()
-            .ConstructUsing(dto => new CollaborationRequest(
-                dto.CompanyName, dto.ContactPerson, dto.Email, dto.Phone, dto.Message));
+
     }
 }

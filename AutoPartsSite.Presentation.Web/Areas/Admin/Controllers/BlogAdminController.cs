@@ -1,7 +1,8 @@
 ﻿using AutoPartsSite.Application.DTOs;
 using AutoPartsSite.Application.InterFaces;
-using Microsoft.AspNetCore.Hosting;
+ 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AutoPartsSite.Presentation.Web.Areas.Admin.Controllers
 {
@@ -12,11 +13,18 @@ namespace AutoPartsSite.Presentation.Web.Areas.Admin.Controllers
 
         private readonly IBlogService _blogService;
 
-        public BlogAdminController(IBlogService blogService, IWebHostEnvironment webHostEnvironment)
+        private readonly IBlogCategoryService _blogCategoryService;
+
+        public BlogAdminController(
+            IBlogService blogService,
+            IBlogCategoryService blogCategoryService,
+            IWebHostEnvironment webHostEnvironment)
         {
             _blogService = blogService;
             _webHostEnvironment = webHostEnvironment;
+            _blogCategoryService = blogCategoryService;
         }
+
 
         public async Task<IActionResult> Index()
         {
@@ -25,25 +33,87 @@ namespace AutoPartsSite.Presentation.Web.Areas.Admin.Controllers
             return View(posts);
         }
 
-        public async Task<IActionResult> GetBlog(int id)
+        [HttpPost]
+        
+        public async Task<IActionResult> GetAll()
         {
-            var blog = await _blogService.GetPostByIdAsync(id);
-            return Json(blog);
+            var blogs = await _blogService.GetAllPostsAsync();
+            var result = blogs.Select(b => new
+            {
+                b.Id,
+                b.Title,
+                b.Summary,
+                b.Content,
+                b.FeaturedImage,
+                CreatedAt = b.PublishDate.ToString("yyyy/MM/dd HH:mm")
+            });
+
+            return Json(new { data = result });
+        }
+
+
+        // وقتی روی دکمه کلیک می‌شود
+        [HttpGet]
+        public async Task<IActionResult> Upsert(int? id)
+        {
+            BlogPostDto dto = id == null
+                ? new BlogPostDto()
+                : await _blogService.GetPostByIdAsync((int)id);
+            var categories = await _blogCategoryService.GetAllCategoryAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+
+            return PartialView("_UpsertModal", dto);
         }
 
         [HttpPost]
         public async Task<IActionResult> Upsert(BlogPostDto blogDto)
         {
-            if (blogDto.Id == 0 || blogDto.Id == null)
-            {
+            if (!ModelState.IsValid)
+                return PartialView("_UpsertModal", blogDto);
+
+            if (blogDto.Id == 0)
                 await _blogService.AddPostAsync(blogDto);
-            }
             else
-            {
                 await _blogService.UpdatePostAsync(blogDto);
+
+            return Json(new { success = true }); ;
+        }
+        [HttpPost]
+        public async Task<IActionResult> UploadImageAdmin(IFormFile upload)
+        {
+            if (upload == null || upload.Length == 0)
+            {
+                return Json(new { error = new { message = "فایل معتبر نیست." } });
             }
 
-            return Ok();
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(upload.FileName);
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await upload.CopyToAsync(stream);
+            }
+
+            var imageUrl = Url.Content("~/uploads/" + uniqueFileName); // برای CKEditor
+
+            return Json(new { url = imageUrl });
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+         await   _blogService.DeletePostAsync(id);
+            // می‌توانید redirect به Index یا برگرداندن JSON برای AJAX انجام دهید
+            return RedirectToAction("Index");
+        }
+
+
     }
 }
