@@ -172,6 +172,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Client\ViewComponents\" />
+    <Folder Include="wwwroot\Client\fonts\woff\" />
     <Folder Include="wwwroot\uploads\Blog\" />
   </ItemGroup>
 

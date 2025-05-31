@@ -1,0 +1,69 @@
+/**
+ * DANA Fonts
+ * نسخه: 3.0
+ * نویسنده: Moslem Ebrahimi (moslemebrahimi.com)
+ * فایل باید در مسیر fonts/dana/css/fontiran.css باشد
+ */
+
+@font-face {
+    font-family: 'dana';
+    font-style: normal;
+    font-weight: 100;
+    src: url('../woff/DanaFaNum-Thin.woff2') format('woff2'), url('../woff/DanaFaNum-Thin.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'dana';
+    font-style: normal;
+    font-weight: 200;
+    src: url('../woff/DanaFaNum-UltraLight.woff2') format('woff2'), url('../woff/DanaFaNum-UltraLight.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'dana';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../woff/DanaFaNum-Light.woff2') format('woff2'), url('../woff/DanaFaNum-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'dana';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../woff/DanaFaNum-Medium.woff2') format('woff2'), url('../woff/DanaFaNum-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'dana';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../woff/DanaFaNum-DemiBold.woff2') format('woff2'), url('../woff/DanaFaNum-DemiBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'dana';
+    font-style: normal;
+    font-weight: 800;
+    src: url('../woff/DanaFaNum-ExtraBold.woff2') format('woff2'), url('../woff/DanaFaNum-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'dana';
+    font-style: normal;
+    font-weight: 900;
+    src: url('../woff/DanaFaNum-Black.woff2') format('woff2'), url('../woff/DanaFaNum-Black.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'dana';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../woff/DanaFaNum-Bold.woff2') format('woff2'), url('../woff/DanaFaNum-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'dana';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../woff/DanaFaNum-Regular.woff2') format('woff2'), url('../woff/DanaFaNum-Regular.woff') format('woff');
+}

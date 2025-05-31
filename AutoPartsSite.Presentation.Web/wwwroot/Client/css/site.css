@@ -1,8 +1,17 @@
-﻿body {
-    font-family: 'Tahoma', sans-serif;
+﻿/* ============================
+   فونت Dana
+   ============================ */
+@import url('../fonts/css/fontiran.css');
+
+body , html {
+    font-family: Dana, Tahoma, Arial, sans-serif;
     background: #f5f5f5;
+    overflow-x: hidden;
 }
 
+/* ============================
+   استایل‌های Navbar (مثل قبل)
+   ============================ */
 .navbar-custom {
     width: 80%;
     margin: 0 auto;
@@ -91,20 +100,20 @@
     outline: none;
     flex: 1;
 }
-/* Footer Top bar */
+
+/* ============================
+   Footer Top bar
+   ============================ */
 .footer-top {
     position: relative;
     background: #F5F5F5;
     padding: 10px 0;
- 
- 
-  
 }
 
     .footer-top .container {
         position: relative;
     }
-    /* #EDIT: contact-pill styling MARKED */
+
     .footer-top .contact-pill {
         position: absolute;
         top: -30px;
@@ -121,14 +130,16 @@
         align-items: center;
         gap: 10px;
         max-width: 800px;
-        width: 50%;
+        width: 80%;
     }
 
         .footer-top .contact-pill i {
             color: #555;
         }
 
-/* Main Footer */
+/* ============================
+   Main Footer
+   ============================ */
 .footer {
     background: linear-gradient(135deg, #1e3a8a, #4f46e5);
     color: #fff;
@@ -197,7 +208,381 @@
     color: rgba(255,255,255,0.7);
 }
 
-
 .text-s {
     color: #A1A1A1;
+}
+
+/* ============================
+   Slider (Bootstrap Carousel سابق)
+   ============================ */
+/* (می‌توانید کل این بخش را حذف کنید، 
+   چون جایگزینش Swiper Slider شد.) */
+.hero-carousel {
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+    .hero-carousel .carousel-item {
+        position: relative;
+        height: 500px;
+    }
+
+        .hero-carousel .carousel-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-image: url('https://ezteam.ir/neobiz/wp-content/uploads/2025/02/slider-building.png');
+            background-color: rgba(0, 48, 117, 0.8);
+            background-blend-mode: overlay;
+            z-index: 1;
+        }
+
+    .hero-carousel .carousel-caption {
+        position: absolute;
+        top: 50%;
+        right: 5%;
+        transform: translateY(-50%);
+        text-align: right;
+        z-index: 2;
+        padding: 0;
+        width: 45%;
+    }
+
+        .hero-carousel .carousel-caption h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-carousel .carousel-caption h4 {
+            font-size: 1.375rem;
+            font-weight: 500;
+            color: #e0e0e0;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-carousel .carousel-caption .btn-consult {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #003075;
+            background-color: #ffffff;
+            border-radius: 50px;
+            padding: 0.75rem 2rem;
+            text-transform: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+            .hero-carousel .carousel-caption .btn-consult:hover {
+                background-color: #e6e6e6;
+                color: #00205c;
+            }
+
+    .hero-carousel .phone-vertical {
+        position: absolute;
+        top: 50%;
+        left: 2%;
+        transform: translateY(-50%) rotate(90deg);
+        transform-origin: left top;
+        font-size: 1rem;
+        font-weight: 400;
+        color: #ffffff;
+        letter-spacing: 2px;
+        z-index: 2;
+    }
+
+        .hero-carousel .phone-vertical span {
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+    .hero-carousel .carousel-indicators {
+        position: absolute;
+        bottom: 15px;
+        right: 50%;
+        transform: translateX(50%);
+        z-index: 3;
+    }
+
+        .hero-carousel .carousel-indicators [data-bs-target] {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.5);
+        }
+
+        .hero-carousel .carousel-indicators .active {
+            background-color: #ffffff;
+        }
+
+    .hero-carousel .carousel-control-prev,
+    .hero-carousel .carousel-control-next {
+        width: 5%;
+    }
+
+    .hero-carousel .carousel-control-prev-icon,
+    .hero-carousel .carousel-control-next-icon {
+        background-color: rgba(0,0,0,0.3);
+        border-radius: 50%;
+        padding: 10px;
+    }
+
+@media (max-width: 992px) {
+    .hero-carousel .carousel-item {
+        height: 450px;
+    }
+
+    .hero-carousel .carousel-caption {
+        width: 55%;
+        right: 3%;
+    }
+
+        .hero-carousel .carousel-caption h1 {
+            font-size: 2rem;
+        }
+
+        .hero-carousel .carousel-caption h4 {
+            font-size: 1.25rem;
+        }
+}
+
+@media (max-width: 768px) {
+    /* حذف border-radius: 0 در موبایل تا گوشه‌ها همیشه گرد بماند */
+    /* .hero-carousel { border-radius: 0; } */
+    .hero-carousel .carousel-item {
+        height: 350px;
+    }
+
+    .hero-carousel .carousel-caption {
+        width: 70%;
+        right: 5%;
+        top: 50%;
+    }
+
+        .hero-carousel .carousel-caption h1 {
+            font-size: 1.75rem;
+        }
+
+        .hero-carousel .carousel-caption h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+    .hero-carousel .phone-vertical {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-carousel .carousel-item {
+        height: 300px;
+    }
+
+    .hero-carousel .carousel-caption {
+        width: 85%;
+        right: 5%;
+        top: 50%;
+    }
+
+        .hero-carousel .carousel-caption h1 {
+            font-size: 1.5rem;
+        }
+
+        .hero-carousel .carousel-caption h4 {
+            font-size: 0.9rem;
+        }
+
+        .hero-carousel .carousel-caption .btn-consult {
+            font-size: 0.9rem;
+            padding: 0.3rem 0.7rem;
+        }
+}
+
+
+/* کانتینر اصلی اسلایدر */
+/* == کانتینر کلی اسلایدر == */
+.experts-slider-container {
+    width:80%;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* == عنوان بالای اسلایدر == */
+.experts-slider-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+    .experts-slider-title::after {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 75%;
+        height: 2px;
+        margin: 0 0.5rem;
+        background-color: #000;
+    }
+
+/* == Swiper خودِ اسلایدر == */
+.experts-swiper {
+    width: 130%; /* حتماً 100٪ والد باشد */
+    padding-bottom: 1rem; /* فاصلهٔ زیر کارت‌ها */
+    overflow: hidden; /* هیچ‌کس نباید از کناره‌ها بیرون بزند */
+    box-sizing: border-box;
+}
+
+    /* == Wrapper و Slide == */
+    .experts-swiper .swiper-wrapper {
+        display: flex;
+        flex-wrap: nowrap;
+        box-sizing: border-box;
+    }
+
+    .experts-swiper .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto !important;
+        /* width خود به خود از slidesPerView و spaceBetween خواهد آمد */
+    }
+
+/* == کارت هر کارشناس == */
+.expert-card {
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    width: 18rem; /* حدوداً ۲۸۰px */
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 0.75rem;
+    box-sizing: border-box;
+    margin: 0 auto; /* وسط‌چین شدن درون اسلاید */
+}
+
+    .expert-card::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0;
+        width: 8px;
+        height: 60%;
+        background-color: #00dca4;
+        border-radius: 0 0.75rem 0.75rem 0;
+    }
+
+    .expert-card .expert-img {
+        flex-shrink: 0;
+        width: 64px;
+        height: 64px;
+        border-radius: 0.75rem;
+        object-fit: cover;
+    }
+
+    .expert-card .expert-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        text-align: right;
+        color: #333333;
+    }
+
+        .expert-card .expert-info .name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .expert-card .expert-info .title {
+            font-size: 0.875rem;
+            color: #777777;
+            line-height: 1.2;
+        }
+
+/* == واکنش‌گرایی (Breakpoints) برای کارت == */
+@media (max-width: 992px) {
+    .expert-card {
+        width: 15rem; /* کارت کمی کوچک‌تر در تبلت */
+    }
+    .experts-slider-title::after {
+        width: 57%;
+    }
+}
+
+@media (max-width: 768px) {
+    .expert-card {
+        width: 12rem; /* کارت کوچک‌تر در موبایل بزرگ */
+        padding: 0.75rem;
+        gap: 0.5rem;
+    }
+    .experts-slider-title::after {
+        width: 40%;
+    }
+        .expert-card .expert-img {
+            width: 56px;
+            height: 56px;
+        }
+
+        .expert-card .expert-info .name {
+            font-size: 0.95rem;
+        }
+
+        .expert-card .expert-info .title {
+            font-size: 0.85rem;
+        }
+}
+
+@media (max-width: 576px) {
+    .expert-card {
+        width: 13rem; /* کارت کوچک‌تر در موبایل کوچک */
+    }
+    .experts-slider-title::after {
+       display:none;
+    }
+        .expert-card .expert-img {
+            width: 48px;
+            height: 48px;
+        }
+
+        .expert-card .expert-info .name {
+            font-size: 0.9rem;
+        }
+
+        .expert-card .expert-info .title {
+            font-size: 0.8rem;
+        }
+}
+
+/* == اگر از Pagination یا Navigation استفاده می‌کنید: == */
+.swiper-pagination-bullet {
+    background: #00dca4;
+    opacity: 0.7;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #00dca4;
 }
