@@ -49,7 +49,7 @@
 							<td>@blog.Title</td>
 							<td>@blog.Summary</td>
 							<td>@blog.Content</td>
-							<td><img src="@blog.FeaturedImage" alt="Alternate Text" /></td>
+							<td><img src="@blog.FeaturedImage" alt="Alternate Text" width="100px" height="100px"/></td>
 							<td>@blog.PublishDate</td>
 							<td>
 								<div class="d-flex align-items-center">
@@ -255,6 +255,7 @@
 				data: 'featuredImage',   // فرض کردیم DTO این فیلد را دارد
 				render: data => `<img src="${data}" alt="" style="height:40px">`
 			  },
+				 { data: 'category' },
 			  { data: 'createdAt' },
 			  {
 				data: null,

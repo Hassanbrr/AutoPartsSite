@@ -3,6 +3,7 @@ using AutoPartsSite.Application.DTOs.Validator;
 using AutoPartsSite.Application.Profiles;
 using AutoPartsSite.Repository.Base;
 using AutoPartsSite.Repository.Context;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,11 +16,11 @@ namespace AutoPartsSite.Presentation.Web.Infrastructure.Extensions
         {
 
             // Add services to the container.
-            services.AddControllersWithViews()
-                .AddFluentValidation(fv =>
-                {
-                    fv.RegisterValidatorsFromAssemblyContaining<BlogPostValidator>();
-                });
+         
+            services.AddFluentValidationAutoValidation(); // فعال‌سازی اتوماتیک ولیدیشن
+            services.AddValidatorsFromAssemblyContaining<BlogPostValidator>();
+            services.AddValidatorsFromAssemblyContaining<BlogCategoryValidator>();
+
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));

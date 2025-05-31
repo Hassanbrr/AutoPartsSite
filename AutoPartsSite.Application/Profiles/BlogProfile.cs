@@ -14,6 +14,9 @@ namespace AutoPartsSite.Application.Profiles
                 .ForMember(dest => dest.CategoryName,
                     opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : string.Empty));
 
+            CreateMap<BlogPostDto, BlogPost>()
+                .ForMember(dest => dest.Category, opt => opt.Ignore()); // ⛔ از ساختن BlogCategory جلوگیری می‌کنیم
+
 
         }
     }

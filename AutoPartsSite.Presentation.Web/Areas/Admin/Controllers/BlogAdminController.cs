@@ -45,7 +45,8 @@ namespace AutoPartsSite.Presentation.Web.Areas.Admin.Controllers
                 b.Summary,
                 b.Content,
                 b.FeaturedImage,
-                CreatedAt = b.PublishDate.ToString("yyyy/MM/dd HH:mm")
+                CreatedAt = b.PublishDate.ToString("yyyy/MM/dd HH:mm"),
+                Category = b.CategoryName
             });
 
             return Json(new { data = result });
@@ -66,10 +67,51 @@ namespace AutoPartsSite.Presentation.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upsert(BlogPostDto blogDto)
+        public async Task<IActionResult> Upsert(BlogPostDto blogDto,bool removeImage = false)
         {
             if (!ModelState.IsValid)
+            {
                 return PartialView("_UpsertModal", blogDto);
+            }
+
+            // دریافت پست قبلی از پایگاه داده (در صورت وجود)
+            BlogPostDto existingPost = blogDto.Id != 0
+                ? await _blogService.GetPostByIdAsync(blogDto.Id)
+                : null;
+
+            if (Request.Form.Files.Count > 0)
+            {
+                var file = Request.Form.Files[0];
+                if (file != null && file.Length > 0)
+                {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    string uploadsFolder = Path.Combine(wwwRootPath, "uploads");
+
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // تولید نام فایل یکتا
+                    string fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(file.FileName);
+                    string filePath = Path.Combine(uploadsFolder, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    blogDto.FeaturedImage = "/uploads/" + fileName;
+                }
+            }
+            else
+            {
+                // در صورت عدم آپلود فایل، مسیر تصویر قبلی حفظ می‌شود
+                blogDto.FeaturedImage = existingPost?.FeaturedImage;
+            }
+
+
+
 
             if (blogDto.Id == 0)
                 await _blogService.AddPostAsync(blogDto);
@@ -113,6 +155,7 @@ namespace AutoPartsSite.Presentation.Web.Areas.Admin.Controllers
             // می‌توانید redirect به Index یا برگرداندن JSON برای AJAX انجام دهید
             return RedirectToAction("Index");
         }
+
 
 
     }

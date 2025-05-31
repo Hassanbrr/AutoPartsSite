@@ -166,7 +166,7 @@ namespace AutoPartsSite.Repository.Migrations
                     b.HasOne("AutoPartsSite.Domain.BlogCategory", "ParentCategory")
                         .WithMany("ChildCategories")
                         .HasForeignKey("ParentCategoryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ParentCategory");
                 });

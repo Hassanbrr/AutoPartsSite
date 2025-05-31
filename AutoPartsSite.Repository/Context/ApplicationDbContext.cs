@@ -32,7 +32,7 @@ public class ApplicationDbContext : DbContext
             .HasOne(c => c.ParentCategory)
             .WithMany(c => c.ChildCategories)
             .HasForeignKey(c => c.ParentCategoryId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Restrict);
 
     }
 }

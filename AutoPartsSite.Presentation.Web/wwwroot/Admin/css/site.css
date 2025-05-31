@@ -35,3 +35,24 @@ body {
 .ck-editor__editable {
     min-height: 300px;
 }
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 8px 14px;
+    border-radius: 6px;
+    background-color: #0069d9; /* ??? ??? */
+    color: white;
+    border: none;
+    font-weight: bold;
+    margin: 5px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+}
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background-color: #0056b3; /* ??? ??? ???? ????? ???? */
+        transform: scale(1.05); /* ??? ??????? ??? ????? ???? */
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background-color: #28a745; /* ??? ??? ???? ???? ???? */
+        color: white;
+        font-weight: bold;
+    }

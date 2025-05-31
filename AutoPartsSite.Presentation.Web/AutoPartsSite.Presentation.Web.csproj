@@ -172,7 +172,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\uploads\" />
+    <Folder Include="wwwroot\uploads\Blog\" />
   </ItemGroup>
 
 </Project>

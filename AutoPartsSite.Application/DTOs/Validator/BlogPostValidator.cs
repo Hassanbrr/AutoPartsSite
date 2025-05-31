@@ -16,12 +16,7 @@ public class BlogPostValidator : AbstractValidator<BlogPostDto>
 
         RuleFor(x => x.Content)
             .NotEmpty().WithMessage("محتوا الزامی است.");
-
-        RuleFor(x => x.FeaturedImage)
-            .NotEmpty().WithMessage("آدرس تصویر الزامی است.")
-            .Must(url => Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
-            .WithMessage("فرمت آدرس تصویر معتبر نیست.");
-
+ 
         RuleFor(x => x.CategoryId)
             .GreaterThan(0).WithMessage("دسته‌بندی معتبر نیست.");
     }

@@ -19,7 +19,7 @@ namespace AutoPartsSite.Application.Base
             services.AddScoped<ICollaborationRequestService, CollaborationRequestService>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IBlogCategoryService, BlogCategoryService>();
-
+            services.AddScoped<ISlugService, SlugService>();
         }
     }
 }

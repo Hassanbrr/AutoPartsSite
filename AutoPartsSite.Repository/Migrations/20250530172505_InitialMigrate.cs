@@ -12,20 +12,25 @@ namespace AutoPartsSite.Repository.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BlogPosts",
+                name: "BlogCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Summary = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FeaturedImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PublishDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentCategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BlogPosts", x => x.Id);
+                    table.PrimaryKey("PK_BlogCategories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BlogCategories_BlogCategories_ParentCategoryId",
+                        column: x => x.ParentCategoryId,
+                        principalTable: "BlogCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,6 +67,41 @@ namespace AutoPartsSite.Repository.Migrations
                 {
                     table.PrimaryKey("PK_ContactMessages", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "BlogPosts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Summary = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FeaturedImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PublishDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlogPosts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BlogPosts_BlogCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "BlogCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BlogCategories_ParentCategoryId",
+                table: "BlogCategories",
+                column: "ParentCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BlogPosts_CategoryId",
+                table: "BlogPosts",
+                column: "CategoryId");
         }
 
         /// <inheritdoc />
@@ -75,6 +115,9 @@ namespace AutoPartsSite.Repository.Migrations
 
             migrationBuilder.DropTable(
                 name: "ContactMessages");
+
+            migrationBuilder.DropTable(
+                name: "BlogCategories");
         }
     }
 }

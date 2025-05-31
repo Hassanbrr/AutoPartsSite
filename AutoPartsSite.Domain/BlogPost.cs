@@ -1,23 +1,24 @@
-﻿namespace AutoPartsSite.Domain;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
+using AutoPartsSite.Domain.Common;
 
-public class BlogPost
+namespace AutoPartsSite.Domain;
+
+public class BlogPost : ISlugEntity
 {
-    public int Id { get; private set; }
-    public string Title { get; private set; }
-    public string Summary { get; private set; }
-    public string Content { get; private set; }
-    public string FeaturedImage { get; private set; }
-    public DateTime PublishDate { get; private set; }
-    public string Slug { get; private set; }
+    public int Id { get;  set; }
+    public string Title { get;  set; }
+    public string Summary { get;  set; }
+    public string Content { get;  set; }
+    [ValidateNever]
+    public string FeaturedImage { get;  set; }
+    public DateTime PublishDate { get;  set; }
+    public string Slug { get;  set; }
 
     public int CategoryId { get;  set; }
-    public BlogCategory Category { get; private set; }
+    public BlogCategory Category { get;  set; }
 
     // سازنده اصلی برای ایجاد یک مقاله جدید
 
-
-    public BlogPost()
-    {
-
-    }
+    public string GetSlugSource() => Title;
 }

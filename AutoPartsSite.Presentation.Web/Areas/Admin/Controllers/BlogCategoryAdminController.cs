@@ -13,7 +13,10 @@ namespace AutoPartsSite.Presentation.Web.Areas.Admin.Controllers
 
         public BlogCategoryAdminController(IBlogCategoryService categoryService)
         {
-            _categoryService = categoryService;
+            _categoryService
+                
+                
+                = categoryService;
         }
 
         [HttpGet]

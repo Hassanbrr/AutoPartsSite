@@ -5,7 +5,7 @@
 	<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 </div>
 <div class="modal-body">
-	<form id="UpsertBlogForm" asp-area="Admin" asp-controller="BlogAdmin" asp-action="Upsert" method="POST">
+	<form id="UpsertBlogForm" asp-area="Admin" asp-controller="BlogAdmin" asp-action="Upsert" method="POST" enctype="multipart/form-data">
 		<input asp-for="Id" type="hidden" />
 
 		<div class="mb-3">
@@ -14,13 +14,25 @@
 			<span asp-validation-for="Title" class="text-danger"></span>
 		</div>
 		<div class="mb-3">
-		 
+			<label asp-for="CategoryId" class="form-label">دسته‌بندی</label>
+			<select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories">
+				<option value="">-- انتخاب دسته‌بندی --</option>
+			</select>
 			<span asp-validation-for="CategoryId" class="text-danger"></span>
 		</div>
 		<div class="mb-3">
-			<label asp-for="FeaturedImage" class="form-label"></label>
-			<input asp-for="FeaturedImage" class="form-control" />
+			<label asp-for="FeaturedImage" class="form-label"></label> 
+			<input asp-for="FeaturedImage" type="file" class="form-control" />
 			<span asp-validation-for="FeaturedImage" class="text-danger"></span>
+			
+			@if (Model.Id > 0 && !string.IsNullOrEmpty(Model.FeaturedImage))
+			{
+				<div class="mb-2">
+					<img src="@Model.FeaturedImage" id="currentFeaturedImage"
+					     class="img-thumbnail" style="max-height: 150px; display: block;">
+				 
+			 	</div>
+			}
 		</div>
 
 		<div class="mb-3">
