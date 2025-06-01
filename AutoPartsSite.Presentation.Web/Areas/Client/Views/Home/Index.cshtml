@@ -78,7 +78,7 @@
     <!-- ساختار Swiper درون یک ردیف و ستون Bootstrap -->
     <div class="row">
         <div class="col-12">
-            <div class="swiper experts-swiper">
+            <div class="swiper experts-swiper ">
                 <div class="swiper-wrapper">
                     <!-- اسلاید اول -->
                     <div class="swiper-slide">
@@ -96,7 +96,7 @@
                     <div class="swiper-slide">
                         <div class="expert-card">
                             <div class="expert-info">
-                                <div class="name">۲ ریاحی</div>
+                                <div class="name">۲ فرزاد غفاری</div>
                                 <div class="title">کارشناس کنترل کیفی</div>
                             </div>
                             <img src="https://picsum.photos/seed/e2/80/80"
@@ -108,7 +108,7 @@
                     <div class="swiper-slide">
                         <div class="expert-card">
                             <div class="expert-info">
-                                <div class="name">۳ ریاحی</div>
+                                <div class="name">۳ فرزاد غفاری</div>
                                 <div class="title">کارشناس کنترل کیفی</div>
                             </div>
                             <img src="https://picsum.photos/seed/e3/80/80"
@@ -120,7 +120,7 @@
                     <div class="swiper-slide">
 	                    <div class="expert-card">
 		                    <div class="expert-info">
-			                    <div class="name">۴ ریاحی</div>
+                                <div class="name">۴ فرزاد غفاری</div>
 			                    <div class="title">کارشناس کنترل کیفی</div>
 		                    </div>
 		                    <img src="https://picsum.photos/seed/e4/80/80"
@@ -131,7 +131,7 @@
                     <div class="swiper-slide">
 	                    <div class="expert-card">
 		                    <div class="expert-info">
-			                    <div class="name">۴ ریاحی</div>
+			                    <div class="name">فرزاد غفاری</div>
 			                    <div class="title">کارشناس کنترل کیفی</div>
 		                    </div>
 		                    <img src="https://picsum.photos/seed/e4/80/80"
@@ -141,7 +141,7 @@
                     </div>  <div class="swiper-slide">
 	                    <div class="expert-card">
 		                    <div class="expert-info">
-			                    <div class="name">۴ ریاحی</div>
+                                <div class="name">۴ فرزاد غفاری</div>
 			                    <div class="title">کارشناس کنترل کیفی</div>
 		                    </div>
 		                    <img src="https://picsum.photos/seed/e4/80/80"
@@ -158,6 +158,8 @@
     </div>
 </div>
 
+
+@await Component.InvokeAsync("BlogPost")
 @section Scripts {
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
@@ -167,47 +169,44 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoPRh2FZEbN8mRl9E9syyZ+49jDVXsEzBhe0Eg74gBG0w+"
             crossorigin="anonymous"></script>
-
     <script>
-    const expertsSwiper = new Swiper('.experts-swiper', {
-        loop: true,                   // حلقهٔ بی‌نهایت (بدون توقف)
-        
-        /* ======= حالت Free Mode برای حرکت پیوسته ======= */
-        freeMode: true,               // فعال کردن حالت آزاد
-        freeModeMomentum: false,      // غیرفعال کردن مومنتوم ثانویه (تا پس از رسیدن به انتها مکث نکند)
-        
-        /* ======= Autoplay بدون وقفه ======= */
-        speed:2500,                  // هرچه عدد بزرگ‌تر، حرکت آرام‌تر (به میلی‌ثانیه)
-        autoplay: {
-            delay: 0,                 // بلافاصله پس از هر اسلاید، اسلاید بعدی آغاز شود
-            disableOnInteraction: false, // تعامل کاربر (کلیک یا لمس) اتوپلی را متوقف نکند
+const expertsSwiper = new Swiper('.experts-swiper', {
+    loop: true,
+    freeMode: true,
+    freeModeMomentum: false,
+    speed: 2500,
+    autoplay: {
+        delay: 0,
+        disableOnInteraction: false,
+    },
+    /* تعداد اسلایدها و فاصله‌ها را روی ۱۰۰٪ حذف کردیم، 
+       چون خود Swiper با breakpoints کنترل می‌شود */
+    slidesPerView: 3,  // پیش‌فرض در موبایل یک اسلاید
+    spaceBetween: 10,  // فاصلهٔ کم در موبایل
+
+    breakpoints: {
+        /* موبایل کوچک: یک اسلاید */
+        0: {
+            slidesPerView: 1,
+            spaceBetween: 10
         },
-        
-        /* ======= اگر نمی‌خواهید کاربر بتواند لمس/کشیدن کند و حرکت را قطع کند: ======= */
-        allowTouchMove: false,        // غیرفعال کردن درگ/لمس (تا اسلایدر هیچ‌وقت قطع نشود)
-        
-        /* ======= نمایش تعداد ثابت اسلایدها ======= */
-        slidesPerView: 2,             // در موبایل هم دو اسلاید همزمان دیده شود
-        spaceBetween: 20,             // فاصلهٔ پیش‌فرض (۲۰px) بین هر اسلاید
-        
-       
-        
-        /* ======= Breakpoints برای واکنش‌گرایی ======= */
-        breakpoints: {
-            576: {
-                slidesPerView: 1,
-                spaceBetween: 50
-            },
-            768: {
-                slidesPerView: 3,
-                spaceBetween: 24
-            },
-            992: {
-                slidesPerView:3,
-                spaceBetween: 30
-            }
+        /* موبایل بزرگ: دو اسلاید */
+        576: {
+            slidesPerView: 2,
+            spaceBetween: 15
+        },
+        /* تبلت: سه اسلاید */
+        768: {
+            slidesPerView: 2,
+            spaceBetween: 20
+        },
+        /* دسکتاپ: سه اسلاید با فاصله بیشتر */
+        992: {
+            slidesPerView:3,
+            spaceBetween: 30
         }
-    });
+    }
+	    });
 </script>
 
 
